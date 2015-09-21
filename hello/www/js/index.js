@@ -16,7 +16,35 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+
+(function () {
+  document.addEventListener("deviceready", function(){
+      if (window.datawedge) {
+         datawedge.start(); //uses default
+         //datawedge.start("com.yourintent.whatever_you_configured_to_broadcast_in_default_profile");
+      }
+
+      datawedge.registerForBarcode(function(data){
+           var labelType = data.type,
+               barcode   = data.barcode;
+
+           console.log("Barcode scanned.  Label type is: " + labelType + ", " + barcode);
+
+           //TODO: handle barcode/label type
+       });
+   });
+
+   $('#start').on('click touchstart', function(){
+     datawedge.startScanner();
+   });
+
+   $('#stop').on('click touchstart', function(){
+     datawedge.stopScanner();
+   });
+
+}());
+
+/*var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -46,6 +74,6 @@ var app = {
 
         console.log('Received Event: ' + id);
     }
-};
+};*/
 
-app.initialize();
+//app.initialize();
