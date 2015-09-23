@@ -1,7 +1,22 @@
 <ion-view title="Pick">
-    <ion-content padding="true" class="has-header">
-        <h1>Scan Packing List</h1>
-        <textarea id="textArea">{{barcode}}</textarea>
-        <textarea id="console"></textarea>
-    </ion-content>
+  <ion-content padding="true" class="has-header">
+    <div ng-show="header">
+      <h1 class="title">Scan Packing List</h1>
+    </div>
+    <div class="row" ng-hide="header">
+      <div class="col col-75">Bin</div>
+      <div class="col">Quantity</div>
+    </div>
+    <ion-list show-delete="deleteShow" show-reorder="reorderShow" can-swipe="listSwipe">
+      <ion-item ng-repeat="m in mpl" class="item-remove-animate">
+        <div class="row">
+          <div class="col col-90">{{m.binnumber}}</div>
+          <div class="col">{{m.sum}}</div>
+        </div>
+        <ion-option-button class="button-positive" ng-click="info(m)">
+          Info
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-view>

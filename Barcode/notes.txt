@@ -1,0 +1,2 @@
+1.  needs to tick down quantity.
+2.  select bin before items
