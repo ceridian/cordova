@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic'])
 
-.run(function($ionicPlatform, $rootScope) {
+.run(function($ionicPlatform, $rootScope, $http) {
   $ionicPlatform.ready(function() {
     datawedge.start();
     datawedge.switchProfile("ACTION");
@@ -42,7 +42,16 @@ angular.module('starter', ['ionic'])
   $rootScope.$watch(function(bar){
     return bar.barcode;
   }, function(newVal, oldVal){
-    $('#console').text(newVal.barcode);
+    var obj = {
+      Authorization: 'NLAuth nlauth_account=277620,nlauth_email=jake@zake.com,nlauth_signature=@Eldar4242,nlauth_role=3',
+      'Content-Type': 'application/json',
+      Body: newVal.barcode
+    }
+    $http.post('https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=129&deploy=1', obj).then(function(res){
+      console.log(res.body);
+    }, function(res){
+      console.log(res.body);
+    });
   });
 });
 
