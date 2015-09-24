@@ -9,7 +9,7 @@
     </div>
     <ion-list show-delete="deleteShow" show-reorder="reorderShow" can-swipe="listSwipe">
       <ion-item ng-repeat="m in mpl" class="item-remove-animate">
-        <div class="row">
+        <div class="row" id="{{m.binnumber}}">
           <div class="col col-90">{{m.binnumber}}</div>
           <div class="col">{{m.sum}}</div>
         </div>
