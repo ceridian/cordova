@@ -1,5 +1,5 @@
 angular.module('starter.services', [])
-.service('scanner', function($rootScope, $http){
+.service('scannerPick', function($http){
   var items = [];
   var picks = [];
   var bins = [];
@@ -40,6 +40,39 @@ angular.module('starter.services', [])
           });
         });
       }else if(indexB){
+        bins.forEach(function(cb){
+          var obj = {};
+          obj.code = code;
+          cb(obj);
+        });
+      }else{
+        items.forEach(function(cb){
+          var obj = {};
+          obj.code = code;
+          cb(obj);
+        });
+      }
+    }
+  }
+})
+.service('scannerStock', function($http){
+  var items = [];
+  var orders = [];
+  var bins = [];
+  return {
+    item: function(callback){
+      items.push(callback);
+    },
+    order: function(callback){
+      orders.push(callback);
+    },
+    bin: function(callback){
+      bins.push(callback);
+    },
+    scan: function(data){
+      var code = data.barcode;
+      var indexB = /^[a-zA-Z]/.test(code);  // test if starts with letter  // if it does it a bin
+      if(indexB){
         bins.forEach(function(cb){
           var obj = {};
           obj.code = code;

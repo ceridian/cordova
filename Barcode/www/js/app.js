@@ -35,6 +35,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/pick',
       templateUrl: 'temps/pick.html',
       controller: 'PickCtrl'
+    })
+    .state('stock', {
+      url: '/stock',
+      templateUrl: 'temps/stock.html',
+      controller: 'StockCtrl'
     });
 
   $urlRouterProvider.otherwise('/');

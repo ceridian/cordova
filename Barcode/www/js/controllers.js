@@ -1,20 +1,20 @@
 angular.module('starter.controllers', [])
-.controller('PickCtrl', function($scope, $ionicModal, scanner){
+.controller('PickCtrl', function($scope, $ionicModal, scannerPick){
   $scope.deleteShow = false;
   $scope.reorderShow = false;
   $scope.listSwipe = true;
   $scope.header = true;
   $scope.mpl = [];
   $scope.selectedItem = '';
-  scanner.pick(function(data){
+  scannerPick.pick(function(data){
     $scope.header = false;
     $scope.mpl = data;
   });
-  scanner.item(function(data){
+  scannerPick.item(function(data){
     var item = data.code;
     alert('Item: '+$scope.mpl.length);
   });
-  scanner.bin(function(data){
+  scannerPick.bin(function(data){
     var bin = data.code;
     alert('Bin: '+$scope.mpl.length);
   });
@@ -35,4 +35,18 @@ angular.module('starter.controllers', [])
       $scope.openModal();
     });
   }
+})
+.controller('StockCtrl', function($scope, scannerStock){
+  scannerStock.order(function(data){
+    var order = data.code;
+    alert('Order: '+order);
+  });
+  scannerStock.item(function(data){
+    var item = data.code;
+    alert('Item: '+item);
+  });
+  scannerStock.bin(function(data){
+    var bin = data.code;
+    alert('Bin: '+bin);
+  });
 });
