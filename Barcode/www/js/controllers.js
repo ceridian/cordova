@@ -16,19 +16,28 @@ angular.module('starter.controllers', [])
 })
 .controller('BinCtrl', function($scope, scanner){
   scanner.bin(function(data){
-    alert(data);
+    alert("Bin: "+data);
   });
   $scope.title = "Scan Bin";
 })
 .controller('StockCtrl', function($scope, scanner){
   scanner.po(function(data){
-    alert(data);
+    alert("PO: "+data);
   });
   $scope.title = "Scan PO";
 })
-.controller('PickCtrl', function($scope, scanner){
+.controller('PickCtrl', function($scope, scanner, commo){
+  $scope.deleteShow = false;
+  $scope.reorderShow = false;
+  $scope.listSwipe = true;
+  $scope.mpl = [];
   scanner.mpl(function(data){
-    alert(data);
+    commo.getMPL(data, function(records){
+      $scope.mpl = records;
+    });
   });
+  $scope.info = function(m){
+
+  }
   $scope.title = "Scan MPL";
 });
