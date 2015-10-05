@@ -1,52 +1,34 @@
 angular.module('starter.controllers', [])
-.controller('PickCtrl', function($scope, $ionicModal, scannerPick){
-  $scope.deleteShow = false;
-  $scope.reorderShow = false;
-  $scope.listSwipe = true;
-  $scope.header = true;
-  $scope.mpl = [];
-  $scope.selectedItem = '';
-  scannerPick.pick(function(data){
-    $scope.header = false;
-    $scope.mpl = data;
-  });
-  scannerPick.item(function(data){
-    var item = data.code;
-    alert('Item: '+$scope.mpl.length);
-  });
-  scannerPick.bin(function(data){
-    var bin = data.code;
-    alert('Bin: '+$scope.mpl.length);
-  });
 
-  $scope.info = function(item){
-    $scope.selectedItem = item;
-    $ionicModal.fromTemplateUrl('temps/info.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.modal = modal;
-      $scope.openModal = function() {
-        $scope.modal.show();
-      };
-      $scope.closeModal = function() {
-        $scope.modal.hide();
-      };
-      $scope.openModal();
-    });
-  }
+.controller('AppCtrl', function($scope) {
+
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+
+
 })
-.controller('StockCtrl', function($scope, scannerStock){
-  scannerStock.order(function(data){
-    var order = data.code;
-    alert('Order: '+order);
+.controller('LandingCtrl', function($scope, $timeout){
+  $scope.title = "Simple Scanner";
+})
+.controller('BinCtrl', function($scope, scanner){
+  scanner.bin(function(data){
+    alert(data);
   });
-  scannerStock.item(function(data){
-    var item = data.code;
-    alert('Item: '+item);
+  $scope.title = "Scan Bin";
+})
+.controller('StockCtrl', function($scope, scanner){
+  scanner.po(function(data){
+    alert(data);
   });
-  scannerStock.bin(function(data){
-    var bin = data.code;
-    alert('Bin: '+bin);
+  $scope.title = "Scan PO";
+})
+.controller('PickCtrl', function($scope, scanner){
+  scanner.mpl(function(data){
+    alert(data);
   });
+  $scope.title = "Scan MPL";
 });
