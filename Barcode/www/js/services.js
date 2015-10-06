@@ -65,7 +65,7 @@ angular.module('starter.services', [])
           var cut = item.split(':');
           record.item = cut[0];
         });
-        cb(records);
+        callback(records);
       });
     }
   }
