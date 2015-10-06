@@ -52,20 +52,21 @@ angular.module('starter.services', [])
     getMPL: function(mpl, callback){
       $http({
         method: 'POST',
-        url: 'https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=129&deploy=1',
+        url: 'https://rest.na1.netsuite.com/app/site/hosting/restlet.nl?script=177&deploy=1',
         headers: {
           'Authorization': 'NLAuth nlauth_account=277620,nlauth_email=jake@zake.com,nlauth_signature=@Eldar4242,nlauth_role=3',
           'Content-Type': 'application/json'
         },
         data: mpl
       }).then(function(res){
-        var records = res.data.masterList;
+        alert(res);
+        /*var records = res.data.masterList;
         records.forEach(function(record){
           var item = record.item;
           var cut = item.split(':');
           record.item = cut[0];
         });
-        cb(records);
+        callback(records);*/
       });
     }
   }
