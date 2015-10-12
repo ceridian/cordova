@@ -1,5 +1,28 @@
 <ion-view view-title="Stocking">
-  <ion-content>
+  <ion-content padding="true" class="has-header">
     <h1 class="subHead">{{title}}</h1>
+    <div>
+      <label> Date
+        <input class="form-control" type="text" placeholder="{{createddate}}" readonly>
+      </label>
+      <label> PO#
+        <input class="form-control" type="text" placeholder="{{tranid}}" readonly>
+      </label>
+    </div>
+    <div class="row" ng-hide="header">
+      <div class="col col-75">SKU</div>
+      <div class="col">Quantity</div>
+    </div>
+    <ion-list show-delete="deleteShow" show-reorder="reorderShow" can-swipe="listSwipe">
+      <ion-item ng-repeat="i in items" class="item-remove-animate">
+        <div class="row" id="{{i.name}}">
+          <div class="col col-90">{{i.name}}</div>
+          <div class="col">{{i.quantity}}</div>
+        </div>
+        <ion-option-button class="button-positive" ng-click="info(m)">
+          Info
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

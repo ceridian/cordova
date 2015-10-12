@@ -20,10 +20,29 @@ angular.module('starter.controllers', [])
   });
   $scope.title = "Scan Bin";
 })
-.controller('StockCtrl', function($scope, scanner){
+.controller('StockCtrl', function($scope, scanner, commo){
+  $scope.deleteShow = false;
+  $scope.reorderShow = false;
+  $scope.listSwipe = true;
+  $scope.items = [];
+  $scope.createddate = '';
+  $scope.tranid = '';
   scanner.po(function(data){
-    alert("PO: "+data);
+    commo.getPO(data, function(records){
+      var record = records.data;
+      alert(JSON.stringify(record.item));
+      record.item.forEach(function(i){
+        var cut = i.item.name.split(' ');
+        i.name = cut[0];
+      });
+      $scope.items = record.item;
+      $scope.createddate = record.createddate;
+      $scope.tranid = record.tranid;
+    });
   });
+  $scope.info = function(m){
+
+  }
   $scope.title = "Scan PO";
 })
 .controller('PickCtrl', function($scope, scanner, commo){

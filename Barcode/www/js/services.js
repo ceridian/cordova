@@ -24,7 +24,7 @@ angular.module('starter.services', [])
       var indexB = /^[a-zA-Z]/.test(code);  // test if starts with letter  // if it does it a bin
       if(indexI > -1){
         // Item
-        itemss.forEach(function(cb){
+        items.forEach(function(cb){
           cb(code);
         });
       }else if (indexM > -1) {
@@ -52,25 +52,33 @@ angular.module('starter.services', [])
     getMPL: function(mpl, callback){
       $http({
         method: 'POST',
-        url: 'https://rest.na1.netsuite.com/app/site/hosting/restlet.nl?script=177&deploy=1',
+        url: 'https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=180&deploy=1',
         headers: {
           'Authorization': 'NLAuth nlauth_account=277620,nlauth_email=jake@zake.com,nlauth_signature=@Eldar4242,nlauth_role=3',
           'Content-Type': 'application/json'
         },
-        data: mpl
+        data: JSON.stringify({mpl: mpl})
       }).then(function(res){
-        alert(res);
-        /*var records = res.data.masterList;
-        records.forEach(function(record){
+        var records = res.data.masterList;
+        /*records.forEach(function(record){
           var item = record.item;
           var cut = item.split(':');
           record.item = cut[0];
-        });
-<<<<<<< HEAD
+        });*/
         callback(records);
-=======
-        callback(records);*/
->>>>>>> origin/master
+      });
+    },
+    getPO: function(po, callback){
+      $http({
+        method: 'POST',
+        url: "https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=195&deploy=1",
+        headers: {
+          'Authorization': 'NLAuth nlauth_account=277620,nlauth_email=jake@zake.com,nlauth_signature=@Eldar4242,nlauth_role=3',
+          'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({po: po})
+      }).then(function(res){
+        callback(res);
       });
     }
   }
