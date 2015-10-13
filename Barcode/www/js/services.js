@@ -1,8 +1,8 @@
 angular.module('starter.services', [])
-.service('scanner', function(){
+.service('scanner', function($state){
   var items = [];
   var mpls = [];
-  var bins = [];
+  var trans = [];
   var pos = [];
   return {
     item: function(callback){
@@ -11,15 +11,33 @@ angular.module('starter.services', [])
     mpl: function(callback){
       mpls.push(callback);
     },
-    bin: function(callback){
-      bins.push(callback);
+    tran: function(callback){
+      trans.push(callback);
     },
     po: function(callback){
       pos.push(callback);
     },
     scan: function(data){
       var code = data.barcode;
-      var indexM = code.indexOf('MPL');
+      var state = $state.current.name;
+      alert(state);
+      /*if(state == "app.transfer"){
+        trans.forEach(function(cb){
+          cb(code);
+        });
+      }else if(state == 'app.picking'){
+        var list = code.slice(3);
+        mpls.forEach(function(cb){
+          cb(list);
+        });
+      }else if(state == 'app.stocking'){
+        pos.forEach(function(cb){
+          cb(code);
+        });
+      }else{
+        alert("Error: Incorrect State: "+state);
+      }*/
+      /*var indexM = code.indexOf('MPL');
       var indexI = code.indexOf('-');
       var indexB = /^[a-zA-Z]/.test(code);  // test if starts with letter  // if it does it a bin
       if(indexI > -1){
@@ -35,7 +53,7 @@ angular.module('starter.services', [])
         });
       }else if (indexB) {
         // Bin
-        bins.forEach(function(cb){
+        trans.forEach(function(cb){
           cb(code);
         });
       }else{
@@ -43,41 +61,44 @@ angular.module('starter.services', [])
         pos.forEach(function(cb){
           cb(code);
         });
-      }
+      }*/
     }
   }
 })
-.service('commo', function($http){
+.service('sender', function($http, $ionicLoading){
   return {
-    getMPL: function(mpl, callback){
+    post: function(url, body, callback){
+      $ionicLoading.show({
+        template: '<img src="img/ajax-loader.gif" style="width:100px;height:20px;">'
+      });
       $http({
         method: 'POST',
-        url: 'https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=180&deploy=1',
+        url: url,
         headers: {
           'Authorization': 'NLAuth nlauth_account=277620,nlauth_email=jake@zake.com,nlauth_signature=@Eldar4242,nlauth_role=3',
           'Content-Type': 'application/json'
         },
-        data: JSON.stringify({mpl: mpl})
+        data: JSON.stringify(body)
       }).then(function(res){
-        var records = res.data.masterList;
-        /*records.forEach(function(record){
-          var item = record.item;
-          var cut = item.split(':');
-          record.item = cut[0];
-        });*/
-        callback(records);
+        $ionicLoading.hide();
+        callback(res);
+      });
+    }
+  }
+})
+.service('commo', function(sender){
+  return {
+    getMPL: function(mpl, callback){
+      var url = 'https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=180&deploy=1';
+      var body = {mpl: mpl};
+      sender.post(url, body, function(res){
+        callback(res);
       });
     },
     getPO: function(po, callback){
-      $http({
-        method: 'POST',
-        url: "https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=195&deploy=1",
-        headers: {
-          'Authorization': 'NLAuth nlauth_account=277620,nlauth_email=jake@zake.com,nlauth_signature=@Eldar4242,nlauth_role=3',
-          'Content-Type': 'application/json'
-        },
-        data: JSON.stringify({po: po})
-      }).then(function(res){
+      var url = 'https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=195&deploy=1';
+      var body = {po: po};
+      sender.post(url, body, function(res){
         callback(res);
       });
     }

@@ -4,6 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
+//$scope.$emit('LOAD');
 angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 'starter.services'])
 .run(function($ionicPlatform, scanner) {
   $ionicPlatform.ready(function() {
@@ -29,12 +30,12 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-  .state('app.setBin', {
-    url: '/bin',
+  .state('app.transfer', {
+    url: '/transfer',
     views: {
       'menuContent': {
-        templateUrl: 'templates/set-bin.html',
-        controller: 'BinCtrl'
+        templateUrl: 'templates/transfer.html',
+        controller: 'TransCtrl'
       }
     }
   })

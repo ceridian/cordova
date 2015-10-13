@@ -14,8 +14,8 @@ angular.module('starter.controllers', [])
 .controller('LandingCtrl', function($scope, $timeout){
   $scope.title = "Simple Scanner";
 })
-.controller('BinCtrl', function($scope, scanner){
-  scanner.bin(function(data){
+.controller('TransCtrl', function($scope, scanner){
+  scanner.tran(function(data){
     alert("Bin: "+data);
   });
   $scope.title = "Scan Bin";
@@ -23,12 +23,13 @@ angular.module('starter.controllers', [])
 .controller('StockCtrl', function($scope, scanner, commo){
   $scope.deleteShow = false;
   $scope.reorderShow = false;
-  $scope.listSwipe = true;
+  $scope.listSwipe = false;
   $scope.items = [];
   $scope.createddate = '';
   $scope.tranid = '';
+  scanner.scan();
   scanner.po(function(data){
-    commo.getPO(data, function(records){
+    /*commo.getPO(data, function(records){
       var record = records.data;
       alert(JSON.stringify(record.item));
       record.item.forEach(function(i){
@@ -38,7 +39,8 @@ angular.module('starter.controllers', [])
       $scope.items = record.item;
       $scope.createddate = record.createddate;
       $scope.tranid = record.tranid;
-    });
+      $scope.title = "Scan Item";
+    });*/
   });
   $scope.info = function(m){
 
@@ -51,9 +53,9 @@ angular.module('starter.controllers', [])
   $scope.listSwipe = true;
   $scope.mpl = [];
   scanner.mpl(function(data){
-    commo.getMPL(data, function(records){
+    /*commo.getMPL(data, function(records){
       $scope.mpl = records;
-    });
+    });*/
   });
   $scope.info = function(m){
 
