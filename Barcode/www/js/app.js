@@ -65,6 +65,15 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
         controller: 'LandingCtrl'
       }
     }
+  })
+  .state('app.item', {
+    url: '/item',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/item.html',
+        controller: 'ItemCtrl'
+      }
+    }
   });
   $urlRouterProvider.otherwise('/app/landing');
 });

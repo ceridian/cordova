@@ -16,7 +16,7 @@ angular.module('starter.controllers', [])
 })
 .controller('TransCtrl', function($scope, scanner){
   scanner.tran(function(data){
-    alert("Bin: "+data);
+    alert("Bin: "+data.barcode);
   });
   $scope.title = "Scan Bin";
 })
@@ -29,6 +29,7 @@ angular.module('starter.controllers', [])
   $scope.tranid = '';
   scanner.scan();
   scanner.po(function(data){
+    alert("Stock: "+data.barcode);
     /*commo.getPO(data, function(records){
       var record = records.data;
       alert(JSON.stringify(record.item));
@@ -53,6 +54,7 @@ angular.module('starter.controllers', [])
   $scope.listSwipe = true;
   $scope.mpl = [];
   scanner.mpl(function(data){
+    alert("Pick:"+data.barcode);
     /*commo.getMPL(data, function(records){
       $scope.mpl = records;
     });*/
@@ -61,4 +63,10 @@ angular.module('starter.controllers', [])
 
   }
   $scope.title = "Scan MPL";
+})
+.controller('ItemCtrl', function($scope, scanner, commo){
+  scanner.item(function(data){
+    alert("Item:"+data.barcode);
+  });
+  $scope.title = "Item Lookup";
 });

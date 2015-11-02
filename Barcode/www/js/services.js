@@ -18,25 +18,27 @@ angular.module('starter.services', [])
       pos.push(callback);
     },
     scan: function(data){
-      var code = data.barcode;
       var state = $state.current.name;
-      alert(state);
-      /*if(state == "app.transfer"){
+      //alert(state);
+      if(state == "app.transfer"){
         trans.forEach(function(cb){
-          cb(code);
+          cb(data);
         });
       }else if(state == 'app.picking'){
-        var list = code.slice(3);
         mpls.forEach(function(cb){
-          cb(list);
+          cb(data);
         });
       }else if(state == 'app.stocking'){
         pos.forEach(function(cb){
-          cb(code);
+          cb(data);
+        });
+      }else if(state == 'app.item'){
+        items.forEach(function(cb){
+          cb(data);
         });
       }else{
         alert("Error: Incorrect State: "+state);
-      }*/
+      }
       /*var indexM = code.indexOf('MPL');
       var indexI = code.indexOf('-');
       var indexB = /^[a-zA-Z]/.test(code);  // test if starts with letter  // if it does it a bin
